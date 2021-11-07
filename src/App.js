@@ -11,7 +11,7 @@ function App() {
   const [startNode, setStartNode] = useState("");
   const [endNode, setEndNode] = useState("");
   const [generatedGraphHtml, setGeneratedGraphHtml] = useState("");
-  const [optimalOrder, setOptimalOrder] = useState();
+  const [optimalOrder, setOptimalOrder] = useState([]);
 
   const handleChange = (e) => {
     e.preventDefault();
