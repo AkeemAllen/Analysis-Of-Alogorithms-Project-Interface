@@ -12,6 +12,7 @@ function App() {
   const [endNode, setEndNode] = useState("");
   const [generatedGraphHtml, setGeneratedGraphHtml] = useState("");
   const [optimalOrder, setOptimalOrder] = useState([]);
+  const url = process.env.REACT_APP_BASE_URL;
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -21,7 +22,7 @@ function App() {
   const addModuleToModuleList = () => {
     let newString = courseModule.replace(" ", "_");
     axios
-      .post("http://127.0.0.1:5001/add-node", { node: newString })
+      .post(`${url}/add-node`, { node: newString })
       .then((res) => {
         console.log(res);
         setCourseModule("");
@@ -33,13 +34,13 @@ function App() {
   };
 
   const generateGraph = () => {
-    axios.get("http://127.0.0.1:5001/generate-graph").then((res) => {
+    axios.get(`${url}/generate-graph`).then((res) => {
       setGeneratedGraphHtml(res.data);
     });
   };
 
   const generateOptimalOrder = () => {
-    axios.get("http://127.0.0.1:5001/generate-optimal-order").then((res) => {
+    axios.get(`${url}/generate-optimal-order`).then((res) => {
       setOptimalOrder(res.data);
       console.log(res);
     });
@@ -49,7 +50,7 @@ function App() {
     let newStartNode = startNode.replace(" ", "_");
     let newEndNode = endNode.replace(" ", "_");
     axios
-      .post("http://127.0.0.1:5001/add-edge", {
+      .post(`${url}/add-edge`, {
         connection: { from: newStartNode, to: newEndNode },
       })
       .then(() => {
