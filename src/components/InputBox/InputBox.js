@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import "./index.scss";
-import axios from "axios";
 
 const InputBox = ({ handleChange, courseModule, onClick }) => {
   return (

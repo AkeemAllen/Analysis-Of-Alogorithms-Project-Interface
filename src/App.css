@@ -7,7 +7,8 @@
 
 .Container {
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: min-content min-content 1fr;
+  row-gap: 1rem;
 }
 
 .Inputs {
@@ -15,8 +16,27 @@
   grid-template-columns: 1fr 1fr;
 }
 
-.iframe {
+.iframe-container {
   display: grid;
   width: 100%;
+}
+
+.optimal-order {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+}
+
+.optimal-order-modules {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  column-gap: 3rem;
+  row-gap: 1rem;
+}
+
+.iframe {
+  width: 100%;
   height: 100%;
+  border: none;
 }

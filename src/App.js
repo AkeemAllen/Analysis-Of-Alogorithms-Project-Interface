@@ -3,6 +3,7 @@ import "./App.css";
 import InputBox from "./components/InputBox/InputBox";
 import ConnectionBox from "./components/ConnectionBox/ConnectionBox";
 import axios from "axios";
+import ModuleBox from "./components/ModuleBox/ModuleBox";
 
 function App() {
   const [courseModule, setCourseModule] = useState("");
@@ -10,6 +11,7 @@ function App() {
   const [startNode, setStartNode] = useState("");
   const [endNode, setEndNode] = useState("");
   const [generatedGraphHtml, setGeneratedGraphHtml] = useState("");
+  const [optimalOrder, setOptimalOrder] = useState();
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -25,6 +27,7 @@ function App() {
         setCourseModule("");
         setCourseModuleList([...courseModuleList, courseModule]);
         generateGraph();
+        generateOptimalOrder();
       })
       .catch((err) => console.log(err));
   };
@@ -32,6 +35,13 @@ function App() {
   const generateGraph = () => {
     axios.get("http://127.0.0.1:5001/generate-graph").then((res) => {
       setGeneratedGraphHtml(res.data);
+    });
+  };
+
+  const generateOptimalOrder = () => {
+    axios.get("http://127.0.0.1:5001/generate-optimal-order").then((res) => {
+      setOptimalOrder(res.data);
+      console.log(res);
     });
   };
 
@@ -46,6 +56,7 @@ function App() {
         setEndNode("");
         setStartNode("");
         generateGraph();
+        generateOptimalOrder();
       });
   };
 
@@ -68,7 +79,25 @@ function App() {
             setStartNode={setStartNode}
           />
         </div>
-        <iframe className="iframe" srcDoc={generatedGraphHtml}></iframe>
+        <div className="optimal-order">
+          <h3 style={{ textAlign: "center" }}>Optimal Order To Do Modules</h3>
+          <div className="optimal-order-modules">
+            {optimalOrder.map((module_, index) => {
+              return (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <ModuleBox key={index} text={module_} /> -{">"}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <div className="iframe-container">
+          <iframe
+            className="iframe"
+            srcDoc={generatedGraphHtml}
+            title="graph"
+          ></iframe>
+        </div>
       </div>
     </div>
   );
