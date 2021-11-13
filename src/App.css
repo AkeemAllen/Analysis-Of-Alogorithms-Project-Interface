@@ -3,6 +3,7 @@
   background-color: #edf1f4;
   padding: 5rem;
   height: 100vh;
+  grid-template-rows: min-content max-content;
 }
 
 .Container {
@@ -39,4 +40,23 @@
   width: 100%;
   height: 100%;
   border: none;
+}
+
+.reset-button {
+  display: grid;
+  justify-content: center;
+  justify-self: center;
+  background-color: #1e5cf6;
+  color: white;
+  font-weight: 600;
+  border-radius: 25px;
+  border: none;
+  padding: 1.5rem 2rem;
+  width: 10rem;
+  height: 4.5rem;
+  font-family: "Roboto";
+  font-size: 1rem;
+}
+.reset-button:hover {
+  cursor: pointer;
 }

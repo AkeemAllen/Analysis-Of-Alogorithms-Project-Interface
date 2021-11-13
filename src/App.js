@@ -61,8 +61,25 @@ function App() {
       });
   };
 
+  const clearGraph = () => {
+    axios.get(`${url}/clear-graph`).then(() => {
+      generateGraph();
+      setCourseModuleList([]);
+    });
+  };
+
+  const resetGraph = () => {
+    axios.get(`${url}/`).then(() => {
+      clearGraph();
+      generateOptimalOrder();
+    });
+  };
+
   return (
     <div className="App">
+      <button className="reset-button" onClick={resetGraph}>
+        Reset
+      </button>
       <div className="Container">
         <div className="Inputs">
           <InputBox

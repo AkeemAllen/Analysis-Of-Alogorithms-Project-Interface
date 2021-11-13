@@ -2,12 +2,18 @@ const path = require("path");
 
 const { app, BrowserWindow } = require("electron");
 const isDev = require("electron-is-dev");
+const express = require("express");
+const { PythonShell } = require("python-shell");
+const expressApp = express();
+const spawn = require("child_process").spawn;
+
+const pythonProcess = spawn("python", ["./hello.py"]);
 
 function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1080,
+    height: 1080,
     webPreferences: {
       nodeIntegration: true,
     },
@@ -45,3 +51,22 @@ app.on("activate", () => {
     createWindow();
   }
 });
+
+pythonProcess.stdout.on("data", (data) => {
+  console.log(data.toString());
+});
+
+expressApp.get("/", (req, res, next) => {
+  //Here are the option object in which arguments can be passed for the python_test.js.
+  let options = {
+    mode: "text",
+    pythonOptions: ["-u"], // get print results in real-time
+    args: ["shubhamk314"], //An argument which can be accessed in the script using sys.argv[1]
+  };
+
+  // res.send("Test");
+});
+
+//Creates the server on default port 8000 and can be accessed through localhost:8000
+const port = 8000;
+expressApp.listen(port, () => console.log(`Server connected to ${port}`));
